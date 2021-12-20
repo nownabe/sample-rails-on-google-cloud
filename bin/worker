@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require_relative "../lib/pubsub_worker/worker"
+
+PubsubWorker::Worker.new(queue: ARGV[0]).start
