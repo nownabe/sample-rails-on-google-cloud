@@ -28,6 +28,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'activerecord-spanner-adapter'
 gem 'google-cloud-pubsub'
+gem 'google-cloud-secret_manager'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

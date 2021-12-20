@@ -126,6 +126,18 @@ GEM
       gapic-common (>= 0.7, < 2.a)
       google-cloud-errors (~> 1.0)
       grpc-google-iam-v1 (>= 0.6.10, < 2.a)
+    google-cloud-secret_manager (1.1.2)
+      google-cloud-core (~> 1.6)
+      google-cloud-secret_manager-v1 (>= 0.1, < 2.a)
+      google-cloud-secret_manager-v1beta1 (>= 0.3, < 2.a)
+    google-cloud-secret_manager-v1 (0.11.2)
+      gapic-common (>= 0.7, < 2.a)
+      google-cloud-errors (~> 1.0)
+      grpc-google-iam-v1 (>= 0.6.10, < 2.a)
+    google-cloud-secret_manager-v1beta1 (0.8.4)
+      gapic-common (>= 0.7, < 2.a)
+      google-cloud-errors (~> 1.0)
+      grpc-google-iam-v1 (>= 0.6.10, < 2.a)
     google-cloud-spanner (2.11.0)
       concurrent-ruby (~> 1.0)
       google-cloud-core (~> 1.5)
@@ -300,6 +312,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   google-cloud-pubsub
+  google-cloud-secret_manager
   jbuilder (~> 2.7)
   listen (~> 3.3)
   puma (~> 5.0)
