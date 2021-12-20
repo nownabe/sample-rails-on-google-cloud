@@ -1,0 +1,2 @@
+module PostNotificationsHelper
+end

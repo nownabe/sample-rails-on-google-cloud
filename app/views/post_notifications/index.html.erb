@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Post Notifications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Post</th>
+      <th>Message</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @post_notifications.each do |post_notification| %>
+      <tr>
+        <td><%= post_notification.post_id %></td>
+        <td><%= post_notification.message %></td>
+        <td><%= link_to 'Show', post_notification %></td>
+        <td><%= link_to 'Edit', edit_post_notification_path(post_notification) %></td>
+        <td><%= link_to 'Destroy', post_notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post Notification', new_post_notification_path %>
