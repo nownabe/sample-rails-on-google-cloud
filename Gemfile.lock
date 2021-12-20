@@ -118,6 +118,14 @@ GEM
     google-cloud-env (1.5.0)
       faraday (>= 0.17.3, < 2.0)
     google-cloud-errors (1.2.0)
+    google-cloud-pubsub (2.9.0)
+      concurrent-ruby (~> 1.1)
+      google-cloud-core (~> 1.5)
+      google-cloud-pubsub-v1 (~> 0.0)
+    google-cloud-pubsub-v1 (0.6.1)
+      gapic-common (>= 0.7, < 2.a)
+      google-cloud-errors (~> 1.0)
+      grpc-google-iam-v1 (>= 0.6.10, < 2.a)
     google-cloud-spanner (2.11.0)
       concurrent-ruby (~> 1.0)
       google-cloud-core (~> 1.5)
@@ -255,7 +263,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.1.0)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -292,6 +299,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
+  google-cloud-pubsub
   jbuilder (~> 2.7)
   listen (~> 3.3)
   puma (~> 5.0)
@@ -300,7 +308,6 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   spring
-  sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

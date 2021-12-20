@@ -6,3 +6,15 @@ services:
     ports:
     - 9010:9010
     - 9020:9020
+
+  pubsub:
+    build:
+      context: .
+      dockerfile: Dockerfile-pubsub-emulator
+    command:
+      - --project
+      - $GOOGLE_CLOUD_PROJECT
+      - --host-port
+      - 0.0.0.0:8085
+    ports:
+      - 8085:8085
