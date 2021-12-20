@@ -32,6 +32,8 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+
+    PostNotificationJob.perform_later(@post)
   end
 
   # PATCH/PUT /posts/1 or /posts/1.json
