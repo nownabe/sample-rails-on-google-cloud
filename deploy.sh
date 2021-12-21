@@ -49,3 +49,19 @@ for _ in {1..360}; do # wait 30 minutes
 done
 
 kubectl delete -f k8s/dbjob/job-db-migrate.yaml
+
+
+# Deploy Rails web server to Cloud Run
+
+gcloud run deploy myapp \
+  --args bin/rails,server,-b,0.0.0.0 \
+  --cpu 1000m \
+  --memory 512Mi \
+  --service-account myapp-main@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com \
+  --set-env-vars GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT} \
+  --set-env-vars SPANNER_INSTANCE=${SPANNER_INSTANCE} \
+  --set-env-vars SPANNER_DATABASE=${SPANNER_DATABASE} \
+  --set-env-vars MASTER_KEY_SECRET_ID=${MASTER_KEY_SECRET_ID} \
+  --image ${IMAGE}:${COMMIT_SHA} \
+  --allow-unauthenticated \
+  --region asia-northeast1
