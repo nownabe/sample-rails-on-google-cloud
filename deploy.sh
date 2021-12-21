@@ -65,3 +65,9 @@ gcloud run deploy myapp \
   --image ${IMAGE}:${COMMIT_SHA} \
   --allow-unauthenticated \
   --region asia-northeast1
+
+
+# Deploy worker as a Deployment
+
+kubectl apply -f k8s/worker/service-account-worker-default.yaml
+kubectl apply -f k8s/worker/deployment-worker-default.yaml
