@@ -1,0 +1,24 @@
+steps:
+
+  - name: gcr.io/kaniko-project/executor
+    args: [--destination=$_IMAGE:$COMMIT_SHA, --cache=true, --cache-ttl=240h]
+
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: bash
+    args: [deploy.sh]
+    env:
+      - COMMIT_SHA=$COMMIT_SHA
+      - GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+      - SPANNER_INSTANCE=$_SPANNER_INSTANCE
+      - SPANNER_DATABASE=$_SPANNER_DATABASE
+      - MASTER_KEY_SECRET_ID=$_SECRET_RAILS_MASTER_KEY_ID
+      - IMAGE=$_IMAGE
+
+substitutions:
+  _IMAGE: asia-northeast1-docker.pkg.dev/${PROJECT_ID}/myapp/myapp
+
+options:
+  dynamic_substitutions: true
+  logging: CLOUD_LOGGING_ONLY
+
+serviceAccount: projects/$PROJECT_ID/serviceAccounts/build-deploy@$PROJECT_ID.iam.gserviceaccount.com
