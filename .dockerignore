@@ -6,6 +6,7 @@
 Dockerfile
 Dockerfile-pubsub-emulator
 README.md
+bin/remote-console
 cloudbuild.yaml
 config/master.key
 deploy.sh

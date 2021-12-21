@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+GKE_CLUSTER=${GKE_CLUSTER:-myapp}
+REGION=${REGION:-asia-northeast1}
+
+atexit() {
+  kubectl delete -f tmp/pod-console.yaml || :
+  rm -f tmp/pod-console.yaml
+}
+
+trap atexit EXIT
+
+export IMAGE=${REGION}-docker.pkg.dev/${GOOGLE_CLOUD_PROJECT}/myapp/myapp
+export DIGEST=$(
+  gcloud artifacts docker images list \
+    ${IMAGE} --sort-by update_time \
+    | tail -1 | awk '{ print $2 }'
+)
+
+gcloud container clusters get-credentials \
+  ${GKE_CLUSTER} \
+  --region ${REGION} \
+  --project ${GOOGLE_CLOUD_PROJECT}
+
+eval "cat <<EOF
+$(cat k8s/console/pod-console.yaml.tpl)
+EOF" > tmp/pod-console.yaml
+
+kubectl apply -f tmp/pod-console.yaml
+
+namespace=$(kubectl apply -f tmp/pod-console.yaml --dry-run=client -o jsonpath="{.metadata.namespace}")
+name=$(kubectl apply -f tmp/pod-console.yaml --dry-run=client -o jsonpath="{.metadata.name}")
+
+for _ in {1..60}; do
+  phase=$(kubectl -n ${namespace} get pod ${name} -o jsonpath='{.status.phase}')
+  echo "Phase: ${phase}"
+  if [[ "${phase}" = "Pending" ]]; then
+    sleep 5
+    continue
+  elif [[ "${phase}" = "Running" ]]; then
+    break
+  else
+    echo "Console pod failed" >&2
+    exit 1
+  fi
+done
+
+kubectl -n ${namespace} exec -ti ${name} -- /bin/bash
