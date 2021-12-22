@@ -16,16 +16,15 @@ ENV SPANNER_DATABASE dummy
 ENV SECRET_KEY_BASE dummy
 ENV RAILS_MASTER_KEY dummy
 
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     g++ \
     gcc \
-    make
-
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    make \
+  && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
   && npm i -g yarn
 
 COPY Gemfile /usr/src/app/
